@@ -1,0 +1,35 @@
+{
+    "name": "libero/content-api-bundle",
+    "description": "Implements the Libero content API",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Libero\\ContentApiBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\Libero\\ContentApiBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0"
+    },
+    "require-dev": {
+        "libero/coding-standard": "^0.2",
+        "phpstan/phpstan": "^0.10",
+        "phpstan/phpstan-phpunit": "^0.10",
+        "phpunit/phpunit": "^7.2"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
