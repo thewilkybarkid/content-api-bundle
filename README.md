@@ -16,6 +16,25 @@ composer require libero/content-api-bundle
 
 If you're not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html), you'll need to enable the bundle in your application.
 
+Configure your application to add one (or more) content APIs:
+
+```yaml
+content_api:
+    services:
+        research-articles: ~
+        blog-articles: ~
+```
+
+And add the following to your routing file:
+
+```yaml
+content_api:
+    resource: .
+    type: content_api
+```
+
+This example will create two content APIs, with the prefixes `research-articles` and `blog-articles`.
+
 Getting help
 ------------
 

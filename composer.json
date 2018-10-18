@@ -15,14 +15,20 @@
     },
     "require": {
         "php": "^7.2",
+        "libero/ping-controller": "^0.1",
+        "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",
-        "symfony/http-kernel": "^3.4 || ^4.0"
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0",
+        "symfony/routing": "^3.4 || ^4.0"
     },
     "require-dev": {
         "libero/coding-standard": "^0.2",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
-        "phpunit/phpunit": "^7.2"
+        "phpunit/phpunit": "^7.2",
+        "symfony/filesystem": "^3.4 || ^4.0"
     },
     "config": {
         "sort-packages": true

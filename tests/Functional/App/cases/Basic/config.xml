@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:content-api="http://libero.pub/schema/content-api-bundle"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <content-api:content-api>
+        <content-api:service prefix="service-one"/>
+        <content-api:service prefix="service-two"/>
+    </content-api:content-api>
+
+</container>

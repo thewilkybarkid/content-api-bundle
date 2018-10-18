@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://libero.pub/schema/content-api-bundle"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://libero.pub/schema/content-api-bundle" elementFormDefault="qualified">
+
+    <xsd:element name="content-api" type="content-api"/>
+
+    <xsd:complexType name="content-api">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:element name="service" type="service" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="service">
+        <xsd:attribute name="prefix" type="xsd:string" use="required"/>
+    </xsd:complexType>
+
+</xsd:schema>
