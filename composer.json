@@ -15,6 +15,7 @@
     },
     "require": {
         "php": "^7.2",
+        "fluentdom/fluentdom": "^7.0",
         "libero/ping-controller": "^0.1",
         "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",

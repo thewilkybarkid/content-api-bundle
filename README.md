@@ -3,7 +3,7 @@ ContentApiBundle
 
 [![Build Status](https://travis-ci.com/libero/content-api-bundle.svg?branch=master)](https://travis-ci.com/libero/content-api-bundle)
 
-This is a [Symfony](https://symfony.com/) bundle that will implement the Libero content API.
+This is a [Symfony](https://symfony.com/) bundle that implements the Libero content API.
 
 Getting started
 ---------------

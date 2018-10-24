@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Libero\ContentApiBundle\DependencyInjection;
 
+use Libero\ContentApiBundle\Controller\GetItemController;
+use Libero\ContentApiBundle\Controller\GetItemListController;
 use Libero\ContentApiBundle\Routing\Loader;
 use Libero\PingController\PingController;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -37,6 +39,14 @@ final class ContentApiExtension extends Extension
         $ping = new Definition(PingController::class);
         $ping->addTag('controller.service_arguments');
         $container->setDefinition("libero.content_api.{$config['name']}.ping", $ping);
+
+        $getItem = new Definition(GetItemController::class);
+        $getItem->addTag('controller.service_arguments');
+        $container->setDefinition("libero.content_api.{$config['name']}.item.get", $getItem);
+
+        $getItemList = new Definition(GetItemListController::class);
+        $getItemList->addTag('controller.service_arguments');
+        $container->setDefinition("libero.content_api.{$config['name']}.item_list.get", $getItemList);
     }
 
     public function getConfiguration(array $config, ContainerBuilder $container) : ConfigurationInterface
