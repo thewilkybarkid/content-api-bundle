@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <defaults public="false"/>
+
+        <service id="Libero\ContentApiBundle\EventListener\InvalidIdListener"
+            class="Libero\ContentApiBundle\EventListener\InvalidIdListener">
+            <argument type="service" id="translator"/>
+            <tag name="kernel.event_listener" event="libero.api_problem.create" method="onCreateApiProblem"/>
+        </service>
+
+        <service id="Libero\ContentApiBundle\EventListener\InvalidVersionNumberListener"
+            class="Libero\ContentApiBundle\EventListener\InvalidVersionNumberListener">
+            <argument type="service" id="translator"/>
+            <tag name="kernel.event_listener" event="libero.api_problem.create" method="onCreateApiProblem"/>
+        </service>
+
+        <service id="Libero\ContentApiBundle\EventListener\ItemNotFoundListener"
+            class="Libero\ContentApiBundle\EventListener\ItemNotFoundListener">
+            <argument type="service" id="translator"/>
+            <tag name="kernel.event_listener" event="libero.api_problem.create" method="onCreateApiProblem"/>
+        </service>
+
+    </services>
+
+</container>

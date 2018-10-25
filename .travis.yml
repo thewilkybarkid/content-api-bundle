@@ -44,6 +44,11 @@ jobs:
           script:
               - vendor/bin/phpstan analyse
 
+        - stage: Code Quality
+          env: LINT_TRANSLATIONS
+          script:
+              - bin/console lint:xliff src/Resources/translations
+
 stages:
     - Test
     - name: Code Quality

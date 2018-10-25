@@ -11,7 +11,9 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use function array_merge;
 use function call_user_func_array;
+use function file_exists;
 use function is_dir;
 use function serialize;
 use function sys_get_temp_dir;
@@ -37,6 +39,10 @@ final class Kernel extends BaseKernel
     public function registerBundles() : iterable
     {
         $bundles = require __DIR__.'/bundles.php';
+
+        if (file_exists(__DIR__."/cases/{$this->testCase}/bundles.php")) {
+            $bundles = array_merge($bundles, require __DIR__."/cases/{$this->testCase}/bundles.php");
+        }
 
         foreach ($bundles as $bundle) {
             yield new $bundle();

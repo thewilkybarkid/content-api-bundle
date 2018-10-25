@@ -25,11 +25,18 @@
         "symfony/routing": "^3.4 || ^4.0"
     },
     "require-dev": {
+        "libero/api-problem-bundle": "^0.1",
         "libero/coding-standard": "^0.2",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
         "phpunit/phpunit": "^7.2",
-        "symfony/filesystem": "^3.4 || ^4.0"
+        "symfony/console": "^3.4 || ^4.0",
+        "symfony/filesystem": "^3.4 || ^4.0",
+        "symfony/translation": "^3.4 || ^4.0"
+    },
+    "suggest": {
+        "libero/api-problem-bundle": "To have exceptions converted to API problems",
+        "symfony/translation": "To have exceptions converted to API problems"
     },
     "config": {
         "sort-packages": true

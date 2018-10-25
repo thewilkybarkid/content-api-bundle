@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+
+        <body>
+
+            <trans-unit id="libero.content.item.not_found.title">
+                <source>libero.content.item.not_found.title</source>
+                <target>Item not found</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.not_found.details">
+                <source>libero.content.item.not_found.details</source>
+                <target>An item with the ID "%id%" could not be found.</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.invalid_id.title">
+                <source>libero.content.item.invalid_id.title</source>
+                <target>Invalid ID</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.invalid_id.details">
+                <source>libero.content.item.invalid_id.details</source>
+                <target>"%id%" is not a valid ID.</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.invalid_version.title">
+                <source>libero.content.item.invalid_version.title</source>
+                <target>Invalid version number</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.invalid_version.details">
+                <source>libero.content.item.invalid_version.details</source>
+                <target>"%version%" is not a valid version number.</target>
+            </trans-unit>
+
+        </body>
+
+    </file>
+
+</xliff>
