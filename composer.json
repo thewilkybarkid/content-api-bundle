@@ -9,6 +9,9 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "tests/functions.php"
+        ],
         "psr-4": {
             "tests\\Libero\\ContentApiBundle\\": "tests/"
         }
@@ -20,7 +23,7 @@
         "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",
         "symfony/framework-bundle": "^3.4 || ^4.0",
-        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/http-foundation": "^3.4.13 || ^4.0",
         "symfony/http-kernel": "^3.4 || ^4.0",
         "symfony/routing": "^3.4 || ^4.0"
     },

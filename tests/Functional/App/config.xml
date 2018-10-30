@@ -10,4 +10,14 @@
         <framework:translator enabled="true"/>
     </framework:config>
 
+    <services>
+
+        <service id="Libero\ContentApiBundle\Adapter\InMemoryItems"
+                class="Libero\ContentApiBundle\Adapter\InMemoryItems" public="true"/>
+
+        <service id="Libero\ContentApiBundle\Adapter\NullItems"
+                class="Libero\ContentApiBundle\Adapter\NullItems"/>
+
+    </services>
+
 </container>

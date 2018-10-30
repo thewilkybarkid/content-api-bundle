@@ -8,8 +8,11 @@ use DirectoryIterator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use tests\Libero\ContentApiBundle\Functional\App\Kernel;
+use function tests\Libero\ContentApiBundle\capture_output;
 
 abstract class FunctionalTestCase extends TestCase
 {
@@ -44,6 +47,16 @@ abstract class FunctionalTestCase extends TestCase
     final public function getKernel(string $name) : KernelInterface
     {
         return self::$kernels[$name];
+    }
+
+    final protected function captureContent(KernelInterface $kernel, Request $request, &$content) : Response
+    {
+        return capture_output(
+            function () use ($kernel, $request) : Response {
+                return $kernel->handle($request);
+            },
+            $content
+        );
     }
 
     private static function getTestCases() : iterable

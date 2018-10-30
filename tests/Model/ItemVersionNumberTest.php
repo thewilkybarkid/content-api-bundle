@@ -77,4 +77,17 @@ final class ItemVersionNumberTest extends TestCase
         yield 'hexadecimal' => ['0x1A'];
         yield 'binary' => ['0b11111111'];
     }
+
+    /**
+     * @test
+     */
+    public function it_gets_the_next_number() : void
+    {
+        $versionNumber1 = ItemVersionNumber::fromInt(1);
+        $versionNumber2 = ItemVersionNumber::fromInt(2);
+        $versionNumber3 = ItemVersionNumber::fromInt(3);
+
+        $this->assertEquals($versionNumber2, $versionNumber1->next());
+        $this->assertEquals($versionNumber3, $versionNumber2->next());
+    }
 }

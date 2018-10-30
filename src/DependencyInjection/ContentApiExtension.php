@@ -13,6 +13,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use function array_keys;
 use function str_replace;
@@ -28,13 +29,13 @@ final class ContentApiExtension extends Extension
 
         foreach (array_keys($config['services']) as $prefix) {
             $config['services'][$prefix]['name'] = str_replace('-', '_', (string) $prefix);
-            $this->addContentService($config['services'][$prefix], $container);
+            $this->addContentService((string) $prefix, $config['services'][$prefix], $container);
         }
 
         $container->findDefinition(Loader::class)->setArgument(0, $config['services']);
     }
 
-    private function addContentService(array $config, ContainerBuilder $container) : void
+    private function addContentService(string $prefix, array $config, ContainerBuilder $container) : void
     {
         $ping = new Definition(PingController::class);
         $ping->addTag('controller.service_arguments');
@@ -42,10 +43,13 @@ final class ContentApiExtension extends Extension
 
         $getItem = new Definition(GetItemController::class);
         $getItem->addTag('controller.service_arguments');
+        $getItem->addArgument(new Reference($config['items']));
         $container->setDefinition("libero.content_api.{$config['name']}.item.get", $getItem);
 
         $getItemList = new Definition(GetItemListController::class);
         $getItemList->addTag('controller.service_arguments');
+        $getItemList->addArgument(new Reference($config['items']));
+        $getItemList->addArgument($prefix);
         $container->setDefinition("libero.content_api.{$config['name']}.item_list.get", $getItemList);
     }
 

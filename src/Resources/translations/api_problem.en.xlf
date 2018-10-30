@@ -38,6 +38,26 @@
                 <target>"%version%" is not a valid version number.</target>
             </trans-unit>
 
+            <trans-unit id="libero.content.item.unexpected_version.title">
+                <source>libero.content.item.unexpected_version.title</source>
+                <target>Unexpected version number</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.unexpected_version.details">
+                <source>libero.content.item.unexpected_version.details</source>
+                <target>Expected version %expected% for item "%id%", not %version%.</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.version_not_found.title">
+                <source>libero.content.item.version_not_found.title</source>
+                <target>Item version not found</target>
+            </trans-unit>
+
+            <trans-unit id="libero.content.item.version_not_found.details">
+                <source>libero.content.item.version_not_found.details</source>
+                <target>Item "%id%" does not have a version %version%.</target>
+            </trans-unit>
+
         </body>
 
     </file>

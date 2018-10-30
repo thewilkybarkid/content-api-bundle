@@ -19,10 +19,15 @@ If you're not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.ht
 Configure your application to add one (or more) content APIs:
 
 ```yaml
+services:
+    Libero\ContentApiBundle\Adapter\NullItems: ~
+
 content_api:
     services:
-        research-articles: ~
-        blog-articles: ~
+        research-articles:
+            items: Libero\ContentApiBundle\Adapter\NullItems
+        blog-articles:
+            items: Libero\ContentApiBundle\Adapter\NullItems
 ```
 
 And add the following to your routing file:

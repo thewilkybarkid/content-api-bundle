@@ -45,6 +45,10 @@ final class ContentApiConfiguration implements ConfigurationInterface
             ->useAttributeAsKey('prefix')
             ->arrayPrototype()
                 ->children()
+                    ->scalarNode('items')
+                        ->isRequired()
+                        ->info('The service name to use.')
+                    ->end()
                 ->end()
             ->end()
         ;

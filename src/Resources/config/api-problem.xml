@@ -26,6 +26,12 @@
             <tag name="kernel.event_listener" event="libero.api_problem.create" method="onCreateApiProblem"/>
         </service>
 
+        <service id="Libero\ContentApiBundle\EventListener\VersionNotFoundListener"
+            class="Libero\ContentApiBundle\EventListener\VersionNotFoundListener">
+            <argument type="service" id="translator"/>
+            <tag name="kernel.event_listener" event="libero.api_problem.create" method="onCreateApiProblem"/>
+        </service>
+
     </services>
 
 </container>

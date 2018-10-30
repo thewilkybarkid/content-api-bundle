@@ -13,6 +13,7 @@
     </xsd:complexType>
 
     <xsd:complexType name="service">
+        <xsd:attribute name="items" type="xsd:string" use="required"/>
         <xsd:attribute name="prefix" type="xsd:string" use="required"/>
     </xsd:complexType>
 

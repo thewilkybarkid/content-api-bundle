@@ -42,4 +42,9 @@ final class ItemVersionNumber
     {
         return $this->version;
     }
+
+    public function next() : ItemVersionNumber
+    {
+        return ItemVersionNumber::fromInt($this->toInt() + 1);
+    }
 }
