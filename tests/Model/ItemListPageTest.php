@@ -39,12 +39,12 @@ final class ItemListPageTest extends TestCase
     /**
      * @test
      */
-    public function it_may_have_a_next_id() : void
+    public function it_may_have_a_cursor() : void
     {
-        $with = new ItemListPage([], $id = ItemId::fromString('foo'));
+        $with = new ItemListPage([], $cursor = 'foo');
         $withOut = new ItemListPage([], null);
 
-        $this->assertSame($id, $with->getNextId());
-        $this->assertNull($withOut->getNextId());
+        $this->assertSame($cursor, $with->getCursor());
+        $this->assertNull($withOut->getCursor());
     }
 }

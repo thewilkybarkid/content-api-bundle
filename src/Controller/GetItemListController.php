@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Libero\ContentApiBundle\Controller;
 
 use FluentDOM\DOM\Document;
-use Libero\ContentApiBundle\Model\ItemId;
 use Libero\ContentApiBundle\Model\Items;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,7 @@ use const PHP_QUERY_RFC3986;
 
 final class GetItemListController
 {
-    private const NEXT = 'next';
+    private const CURSOR = 'cursor';
     private const PER_PAGE = 'per-page';
     private const DEFAULT_PER_PAGE = 20;
 
@@ -31,7 +30,7 @@ final class GetItemListController
     {
         $ids = $this->items->list(
             $request->query->getInt(self::PER_PAGE, self::DEFAULT_PER_PAGE),
-            $request->query->has(self::NEXT) ? ItemId::fromString($request->query->get(self::NEXT)) : null
+            $request->query->get(self::CURSOR)
         );
 
         $document = new Document();
@@ -49,9 +48,9 @@ final class GetItemListController
             ['Content-Type' => 'application/xml; charset=utf-8']
         );
 
-        if ($ids->getNextId()) {
+        if ($ids->getCursor()) {
             $query = clone $request->query;
-            $query->set(self::NEXT, (string) $ids->getNextId());
+            $query->set(self::CURSOR, $ids->getCursor());
             if (self::DEFAULT_PER_PAGE === $query->getInt(self::PER_PAGE, self::DEFAULT_PER_PAGE)) {
                 $query->remove(self::PER_PAGE);
             }

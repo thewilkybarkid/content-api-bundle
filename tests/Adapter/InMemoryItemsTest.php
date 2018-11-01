@@ -377,8 +377,8 @@ final class InMemoryItemsTest extends TestCase
         $items->add($item3v1);
 
         $this->assertEquals(new ItemListPage([$item1Id, $item2Id, $item3Id], null), $items->list());
-        $this->assertEquals(new ItemListPage([$item1Id, $item2Id], $item3Id), $items->list(2));
-        $this->assertEquals(new ItemListPage([$item3Id], null), $items->list(2, $item3Id));
+        $this->assertEquals(new ItemListPage([$item1Id, $item2Id], (string) $item3Id), $items->list(2));
+        $this->assertEquals(new ItemListPage([$item3Id], null), $items->list(2, (string) $item3Id));
     }
 
     /**
@@ -390,6 +390,6 @@ final class InMemoryItemsTest extends TestCase
 
         $this->assertEquals(new ItemListPage([], null), $items->list());
         $this->assertEquals(new ItemListPage([], null), $items->list(20));
-        $this->assertEquals(new ItemListPage([], null), $items->list(10, ItemId::fromString('foo')));
+        $this->assertEquals(new ItemListPage([], null), $items->list(10, 'foo'));
     }
 }

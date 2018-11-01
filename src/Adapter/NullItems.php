@@ -32,7 +32,7 @@ final class NullItems implements IteratorAggregate, Items
         throw new ItemNotFound($id);
     }
 
-    public function list(int $limit = 10, ?ItemId $startAt = null) : ItemListPage
+    public function list(int $limit = 10, ?string $cursor = null) : ItemListPage
     {
         return new ItemListPage([], null);
     }

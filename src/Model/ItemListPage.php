@@ -12,15 +12,15 @@ use function count;
 final class ItemListPage implements Countable, IteratorAggregate
 {
     private $items;
-    private $nextId;
+    private $cursor;
 
     /**
      * @param ItemId[] $items
      */
-    public function __construct(array $items, ?ItemId $nextId)
+    public function __construct(array $items, ?string $cursor)
     {
         $this->items = $items;
-        $this->nextId = $nextId;
+        $this->cursor = $cursor;
     }
 
     public function count() : int
@@ -36,8 +36,8 @@ final class ItemListPage implements Countable, IteratorAggregate
         yield from $this->items;
     }
 
-    public function getNextId() : ?ItemId
+    public function getCursor() : ?string
     {
-        return $this->nextId;
+        return $this->cursor;
     }
 }

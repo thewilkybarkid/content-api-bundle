@@ -98,6 +98,6 @@ final class NullItemsTest extends TestCase
 
         $this->assertEquals(new ItemListPage([], null), $items->list());
         $this->assertEquals(new ItemListPage([], null), $items->list(20));
-        $this->assertEquals(new ItemListPage([], null), $items->list(10, ItemId::fromString('foo')));
+        $this->assertEquals(new ItemListPage([], null), $items->list(10, 'foo'));
     }
 }

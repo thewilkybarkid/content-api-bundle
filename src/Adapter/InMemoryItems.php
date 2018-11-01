@@ -23,6 +23,7 @@ use function max;
 
 final class InMemoryItems implements IteratorAggregate, Items
 {
+    /** @var array<string,array<int,ItemVersion>> */
     private $items;
 
     public function __construct()
@@ -89,27 +90,26 @@ final class InMemoryItems implements IteratorAggregate, Items
         return $this->items[(string) $id][$version];
     }
 
-    public function list(int $limit = 10, ?ItemId $startAt = null) : ItemListPage
+    public function list(int $limit = 10, ?string $cursor = null) : ItemListPage
     {
         $ids = array_keys($this->items);
 
-        if (null !== $startAt) {
-            $key = array_search((string) $startAt, $ids);
+        if (null !== $cursor) {
+            /** @var int|false $offset */
+            $offset = array_search($cursor, $ids);
 
-            if (false === $key) {
+            if (false === $offset) {
                 return new ItemListPage([], null);
-            } else {
-                $key = (int) $key;
             }
         }
 
-        $slice = array_slice($ids, $key ?? 0, $limit + 1);
+        $slice = array_slice($ids, $offset ?? 0, $limit + 1);
 
         if (count($slice) > $limit) {
-            $newNextId = ItemId::fromString((string) array_pop($slice));
+            $newCursor = array_pop($slice);
         }
 
-        return new ItemListPage($slice, $newNextId ?? null);
+        return new ItemListPage($slice, $newCursor ?? null);
     }
 
     public function count() : int
@@ -120,7 +120,7 @@ final class InMemoryItems implements IteratorAggregate, Items
     public function getIterator() : Traversable
     {
         foreach (array_keys($this->items) as $id) {
-            yield $this->get(ItemId::fromString((string) $id), null);
+            yield $this->get(ItemId::fromString($id), null);
         }
     }
 }

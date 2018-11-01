@@ -28,5 +28,5 @@ interface Items extends Countable, Traversable
      */
     public function get(ItemId $id, ?ItemVersionNumber $version = null) : ItemVersion;
 
-    public function list(int $limit = 10, ?ItemId $startAt = null) : ItemListPage;
+    public function list(int $limit = 10, ?string $cursor = null) : ItemListPage;
 }
