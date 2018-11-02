@@ -119,8 +119,8 @@ final class InMemoryItems implements IteratorAggregate, Items
 
     public function getIterator() : Traversable
     {
-        foreach (array_keys($this->items) as $id) {
-            yield $this->get(ItemId::fromString($id), null);
+        foreach ($this->items as $versions) {
+            yield $versions[max(array_keys($versions))];
         }
     }
 }

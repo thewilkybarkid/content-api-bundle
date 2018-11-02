@@ -36,7 +36,6 @@
         "phpunit/phpunit": "^7.2",
         "symfony/console": "^3.4 || ^4.0",
         "symfony/filesystem": "^3.4 || ^4.0",
-        "symfony/finder": "^3.4 || ^4.0",
         "symfony/translation": "^3.4 || ^4.0"
     },
     "suggest": {

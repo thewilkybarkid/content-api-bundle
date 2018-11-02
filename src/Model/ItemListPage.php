@@ -4,40 +4,86 @@ declare(strict_types=1);
 
 namespace Libero\ContentApiBundle\Model;
 
+use ArrayIterator;
 use Countable;
-use IteratorAggregate;
-use Traversable;
-use function count;
+use Generator;
+use Iterator;
+use IteratorIterator;
+use function is_array;
+use function iterator_count;
 
-final class ItemListPage implements Countable, IteratorAggregate
+final class ItemListPage implements Countable, Iterator
 {
-    private $items;
     private $cursor;
+    private $items;
+    private $pointer;
 
     /**
-     * @param ItemId[] $items
+     * @param iterable<ItemId> $items
      */
-    public function __construct(array $items, ?string $cursor)
+    public function __construct(iterable $items, ?string $cursor)
     {
-        $this->items = $items;
+        $this->items = $this->toIterator($items);
         $this->cursor = $cursor;
+        $this->pointer = 0;
     }
 
     public function count() : int
     {
-        return count($this->items);
-    }
-
-    /**
-     * @return Traversable|ItemId[]
-     */
-    public function getIterator() : Traversable
-    {
-        yield from $this->items;
+        return iterator_count($this->items);
     }
 
     public function getCursor() : ?string
     {
         return $this->cursor;
+    }
+
+    /**
+     * @return ItemId|false
+     */
+    public function current()
+    {
+        return $this->items->current();
+    }
+
+    public function next() : void
+    {
+        $this->items->next();
+        $this->pointer++;
+    }
+
+    public function key() : int
+    {
+        return $this->pointer;
+    }
+
+    public function valid() : bool
+    {
+        return $this->items->valid();
+    }
+
+    public function rewind() : void
+    {
+        $this->items->rewind();
+        $this->pointer = 0;
+    }
+
+    private function toIterator(iterable $iterable) : Iterator
+    {
+        if ($iterable instanceof Generator) {
+            $iterator = new ArrayIterator();
+
+            foreach ($iterable as $item) {
+                $iterator[] = $item;
+            }
+
+            return $iterator;
+        }
+
+        if (is_array($iterable)) {
+            return new ArrayIterator($iterable);
+        }
+
+        return new IteratorIterator($iterable);
     }
 }

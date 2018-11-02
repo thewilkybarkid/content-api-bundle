@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Libero\ContentApiBundle\Adapter;
 
 use CallbackFilterIterator;
-use EmptyIterator;
 use FilesystemIterator;
 use FluentDOM\Utility\Iterators\MapIterator;
 use InvalidArgumentException;
@@ -24,9 +23,6 @@ use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Filesystem;
 use Traversable;
-use function array_pop;
-use function array_values;
-use function count;
 use function file_exists;
 use function fopen;
 use function is_dir;
@@ -105,9 +101,7 @@ final class FilesystemItems implements IteratorAggregate, Items
         }
 
         if (null === $version) {
-            $versions = iterator_to_array($this->getVersions($id));
-            rsort($versions);
-            $version = $versions[0];
+            $version = $this->getVersions($id)->current();
         }
 
         if (!$content = @fopen($file = "{$this->path}/{$id}/{$version->toInt()}.xml", 'rb')) {
@@ -127,15 +121,21 @@ final class FilesystemItems implements IteratorAggregate, Items
 
     public function list(int $limit = 10, ?string $cursor = null) : ItemListPage
     {
+        if (null !== $cursor) {
+            try {
+                $cursor = ItemId::fromString($cursor);
+            } catch (InvalidArgumentException $e) {
+                return new ItemListPage([], null);
+            }
+        }
+
         $ids = $this->getIds();
 
-        if (null === $cursor) {
-            $ids = new LimitIterator($ids, 0, $limit + 1);
-        } else {
+        if (null !== $cursor) {
             $found = null;
             $i = 0;
             foreach ($ids as $id) {
-                if (((string) $id) === $cursor) {
+                if ($id == $cursor) {
                     $found = $i;
                     break;
                 }
@@ -143,19 +143,18 @@ final class FilesystemItems implements IteratorAggregate, Items
             }
 
             if (null === $found) {
-                $ids = new EmptyIterator();
-            } else {
-                $ids = new LimitIterator($ids, $found, $limit + 1);
+                return new ItemListPage([], null);
             }
         }
 
-        $ids = array_values(iterator_to_array($ids));
+        $ids->rewind();
 
-        if (count($ids) > $limit) {
-            $newCursor = (string) array_pop($ids);
-        }
+        $ids = new LimitIterator($ids, $found ?? 0, $limit + 1);
+        $ids->seek(($found ?? 0) + $limit);
 
-        return new ItemListPage($ids, $newCursor ?? null);
+        $newCursor = $ids->valid() ? (string) $ids->current() : null;
+
+        return new ItemListPage(new LimitIterator($ids, 0, $limit), $newCursor);
     }
 
     public function count() : int
@@ -194,7 +193,7 @@ final class FilesystemItems implements IteratorAggregate, Items
 
     private function getVersions(ItemId $id) : Iterator
     {
-        return new CallbackFilterIterator(
+        $versions = new CallbackFilterIterator(
             new MapIterator(
                 new FilesystemIterator("{$this->path}/{$id}/"),
                 function (SplFileInfo $file) : ?ItemVersionNumber {
@@ -213,5 +212,10 @@ final class FilesystemItems implements IteratorAggregate, Items
                 return $version instanceof ItemVersionNumber;
             }
         );
+
+        $versions = iterator_to_array($versions);
+        rsort($versions);
+
+        yield from $versions;
     }
 }
