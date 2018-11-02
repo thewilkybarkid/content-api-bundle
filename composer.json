@@ -30,14 +30,17 @@
     "require-dev": {
         "libero/api-problem-bundle": "^0.1",
         "libero/coding-standard": "^0.2",
+        "php-vfs/php-vfs": "^1.4",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
         "phpunit/phpunit": "^7.2",
         "symfony/console": "^3.4 || ^4.0",
         "symfony/filesystem": "^3.4 || ^4.0",
+        "symfony/finder": "^3.4 || ^4.0",
         "symfony/translation": "^3.4 || ^4.0"
     },
     "suggest": {
+        "symfony/filesystem": "To use the FilesystemItems adapter",
         "libero/api-problem-bundle": "To have exceptions converted to API problems",
         "symfony/translation": "To have exceptions converted to API problems"
     },
