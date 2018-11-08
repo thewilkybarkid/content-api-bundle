@@ -4,35 +4,27 @@ declare(strict_types=1);
 
 namespace tests\Libero\ContentApiBundle\Model;
 
+use InvalidArgumentException;
 use Libero\ContentApiBundle\Exception\InvalidVersionNumber;
 use Libero\ContentApiBundle\Model\ItemVersionNumber;
 use PHPUnit\Framework\TestCase;
+use UnderflowException;
+use function fopen;
 
 final class ItemVersionNumberTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider validProvider
+     * @dataProvider validIntegerProvider
      */
-    public function it_accepts_valid_version_numbers(int $value) : void
+    public function it_accepts_valid_integer_version_numbers(int $value) : void
     {
         $versionNumber = ItemVersionNumber::fromInt($value);
 
         $this->assertSame($value, $versionNumber->toInt());
     }
 
-    /**
-     * @test
-     * @dataProvider validProvider
-     */
-    public function it_accepts_valid_string_version_numbers(int $value) : void
-    {
-        $versionNumber = ItemVersionNumber::fromString((string) $value);
-
-        $this->assertSame($value, $versionNumber->toInt());
-    }
-
-    public function validProvider() : iterable
+    public function validIntegerProvider() : iterable
     {
         yield 'version 1' => [1];
         yield 'version 2' => [2];
@@ -41,16 +33,55 @@ final class ItemVersionNumberTest extends TestCase
 
     /**
      * @test
-     * @dataProvider invalidProvider
+     * @dataProvider validStringProvider
      */
-    public function it_rejects_invalid_version_numbers(int $value) : void
+    public function it_accepts_valid_string_version_numbers(string $value, int $expected) : void
+    {
+        $versionNumber = ItemVersionNumber::fromString($value);
+
+        $this->assertSame($expected, $versionNumber->toInt());
+    }
+
+    public function validStringProvider() : iterable
+    {
+        foreach ($this->validIntegerProvider() as $key => $arguments) {
+            yield $key => [(string) $arguments[0], $arguments[0]];
+        }
+    }
+
+    /**
+     * @test
+     * @dataProvider validProvider
+     */
+    public function it_accepts_valid_version_numbers($value, int $expected) : void
+    {
+        $versionNumber = ItemVersionNumber::create($value);
+
+        $this->assertSame($expected, $versionNumber->toInt());
+    }
+
+    public function validProvider() : iterable
+    {
+        foreach ($this->validIntegerProvider() as $key => $arguments) {
+            yield "integer {$key}" => [$arguments[0], $arguments[0]];
+        }
+        foreach ($this->validStringProvider() as $key => $arguments) {
+            yield "string {$key}" => $arguments;
+        }
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidIntegerProvider
+     */
+    public function it_rejects_invalid_integer_version_numbers(int $value) : void
     {
         $this->expectException(InvalidVersionNumber::class);
 
         ItemVersionNumber::fromInt($value);
     }
 
-    public function invalidProvider() : iterable
+    public function invalidIntegerProvider() : iterable
     {
         yield 'zero' => [0];
         yield 'negative' => [-1];
@@ -69,13 +100,50 @@ final class ItemVersionNumberTest extends TestCase
 
     public function invalidStringProvider() : iterable
     {
-        yield from $this->invalidProvider();
+        yield from $this->invalidIntegerProvider();
         yield 'string' => ['foo'];
         yield 'float' => ['1.0'];
         yield 'positive' => ['+1'];
         yield 'octal' => ['0123'];
         yield 'hexadecimal' => ['0x1A'];
         yield 'binary' => ['0b11111111'];
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidProvider
+     */
+    public function it_rejects_invalid_version_numbers($value) : void
+    {
+        $this->expectException(InvalidVersionNumber::class);
+
+        ItemVersionNumber::create($value);
+    }
+
+    public function invalidProvider() : iterable
+    {
+        yield from $this->invalidIntegerProvider();
+        yield from $this->invalidStringProvider();
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidTypeProvider
+     */
+    public function it_rejects_invalid_version_number_types($value) : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        ItemVersionNumber::create($value);
+    }
+
+    public function invalidTypeProvider() : iterable
+    {
+        yield 'boolean' => [true];
+        yield 'float' => [1.0];
+        yield 'null' => [null];
+        yield 'object' => [$this];
+        yield 'resource' => [fopen('php://memory', 'r')];
     }
 
     /**
@@ -89,5 +157,28 @@ final class ItemVersionNumberTest extends TestCase
 
         $this->assertEquals($versionNumber2, $versionNumber1->next());
         $this->assertEquals($versionNumber3, $versionNumber2->next());
+    }
+
+    /**
+     * @test
+     */
+    public function it_gets_the_previous_number() : void
+    {
+        $versionNumber1 = ItemVersionNumber::fromInt(1);
+        $versionNumber2 = ItemVersionNumber::fromInt(2);
+        $versionNumber3 = ItemVersionNumber::fromInt(3);
+
+        $this->assertEquals($versionNumber2, $versionNumber3->previous());
+        $this->assertEquals($versionNumber1, $versionNumber2->previous());
+    }
+
+    /**
+     * @test
+     */
+    public function it_cannot_go_below_1() : void
+    {
+        $this->expectException(UnderflowException::class);
+
+        ItemVersionNumber::fromInt(1)->previous();
     }
 }

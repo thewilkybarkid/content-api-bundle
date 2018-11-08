@@ -43,6 +43,25 @@ abstract class ItemsTestCase extends TestCase
     /**
      * @test
      */
+    final public function it_is_traversable() : void
+    {
+        for ($i = 1; $i <= 500; $i++) {
+            $this->items->add($this->generateItemVersion("item{$i}", 1));
+            $this->items->add($this->generateItemVersion("item{$i}", 2));
+        }
+
+        $this->assertCount(500, $this->items);
+        $i = 0;
+        foreach ($this->items as $item) {
+            $i++;
+            $this->assertEquals($this->generateItemVersion("item{$i}", 2), $item);
+        }
+        $this->assertSame(500, $i);
+    }
+
+    /**
+     * @test
+     */
     final public function it_adds_and_removes_items() : void
     {
         $this->items->add($item1 = $this->generateItemVersion('foo', 1));

@@ -12,10 +12,10 @@ before_install:
     - if [ "$SYMFONY_VERSION" != "" ]; then composer require --dev --no-update symfony/symfony=${SYMFONY_VERSION}; fi
 
 install:
-    - travis_retry composer install --classmap-authoritative --no-suggest --prefer-dist
+    - &Composer travis_retry composer install --classmap-authoritative --no-suggest --prefer-dist
 
 script:
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --exclude-group database
 
 jobs:
     include:
@@ -33,6 +33,49 @@ jobs:
           php: 7.2
           install:
               - travis_retry composer update --classmap-authoritative --no-suggest  --prefer-dist --prefer-lowest --prefer-stable
+
+        - &Database
+          stage: Test
+          env: DB=sqlite
+          php: 7.2
+          script:
+              - vendor/bin/phpunit --group database
+
+        - &MySQL
+          << : *Database
+          env: DB=mysql:5
+          sudo: true
+          services:
+              - docker
+          install:
+              - *Composer
+              - travis_retry docker pull ${DB}
+          before_script:
+              - .travis/run.sh "mysql" "mysqladmin ping --silent" "--env MYSQL_ALLOW_EMPTY_PASSWORD=yes --env MYSQL_DATABASE=test --publish 9000:3306 ${DB} ${OPTIONS}"
+              - export DB_URI=mysql://root@127.0.0.1:9000/test
+
+        - << : *MySQL
+          env: DB=mysql:8 OPTIONS=--default-authentication-plugin=mysql_native_password
+
+        - &MariaDB
+          << : *MySQL
+          env: DB=mariadb:5
+
+        - << : *MariaDB
+          env: DB=mariadb:10
+
+        - &PostgreSQL
+          <<: *MySQL
+          env: DB=postgres:9
+          before_script:
+              - .travis/run.sh "postgres" "psql --username=postgres --list" "--publish 9000:5432 ${DB}"
+              - export DB_URI=pgsql://postgres@localhost:9000/postgres
+
+        - << : *PostgreSQL
+          env: DB=postgres:10
+
+        - << : *PostgreSQL
+          env: DB=postgres:11
 
         - stage: Code Quality
           env: CODING_STANDARDS
