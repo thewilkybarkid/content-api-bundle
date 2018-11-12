@@ -15,6 +15,7 @@ use Libero\ContentApiBundle\Model\ItemVersion;
 use Libero\ContentApiBundle\Model\ItemVersionNumber;
 use Traversable;
 use function array_keys;
+use function array_map;
 use function array_pop;
 use function array_search;
 use function array_slice;
@@ -103,13 +104,16 @@ final class InMemoryItems implements IteratorAggregate, Items
             }
         }
 
+        /** @var string[] $slice */
         $slice = array_slice($ids, $offset ?? 0, $limit + 1);
 
         if (count($slice) > $limit) {
             $newCursor = array_pop($slice);
         }
 
-        return new ItemListPage($slice, $newCursor ?? null);
+        $ids = array_map([ItemId::class, 'fromString'], $slice);
+
+        return new ItemListPage($ids, $newCursor ?? null);
     }
 
     public function count() : int
