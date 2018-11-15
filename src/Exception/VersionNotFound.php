@@ -14,7 +14,7 @@ class VersionNotFound extends OutOfBoundsException
     private $id;
     private $version;
 
-    public function __construct(ItemId $id, ItemVersionNumber $version, Throwable $previous = null, int $code = 0)
+    public function __construct(ItemId $id, ItemVersionNumber $version, ?Throwable $previous = null, int $code = 0)
     {
         parent::__construct("Item '{$id}' does not have a version {$version}", $code, $previous);
 

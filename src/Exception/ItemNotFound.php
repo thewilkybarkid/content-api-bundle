@@ -12,7 +12,7 @@ class ItemNotFound extends OutOfBoundsException
 {
     private $id;
 
-    public function __construct(ItemId $id, Throwable $previous = null, int $code = 0)
+    public function __construct(ItemId $id, ?Throwable $previous = null, int $code = 0)
     {
         parent::__construct("An item with the ID '{$id}' could not be found", $code, $previous);
 

@@ -29,4 +29,9 @@ final class ItemId
 
         return new ItemId($id);
     }
+
+    public function equals(ItemId $other) : bool
+    {
+        return $this->id === $other->id;
+    }
 }

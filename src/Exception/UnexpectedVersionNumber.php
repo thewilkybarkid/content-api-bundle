@@ -19,7 +19,7 @@ class UnexpectedVersionNumber extends OutOfBoundsException
         ItemId $id,
         ItemVersionNumber $version,
         ItemVersionNumber $expected,
-        Throwable $previous = null,
+        ?Throwable $previous = null,
         int $code = 0
     ) {
         parent::__construct("Item '{$id}' expected version {$expected}, got {$version}", $code, $previous);

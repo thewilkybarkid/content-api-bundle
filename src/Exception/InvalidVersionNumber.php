@@ -11,7 +11,7 @@ class InvalidVersionNumber extends UnexpectedValueException
 {
     private $version;
 
-    public function __construct(string $version, Throwable $previous = null, int $code = 0)
+    public function __construct(string $version, ?Throwable $previous = null, int $code = 0)
     {
         parent::__construct("'{$version}' is not a valid version number", $code, $previous);
 

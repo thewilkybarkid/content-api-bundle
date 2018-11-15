@@ -50,4 +50,23 @@ final class ItemIdTest extends TestCase
         yield 'space' => ['foo bar'];
         yield 'other characters' => ['"'];
     }
+
+    /**
+     * @test
+     * @dataProvider comparisonProvider
+     */
+    public function it_can_be_compared(string $one, string $two, bool $expected) : void
+    {
+        $one = ItemId::fromString($one);
+        $two = ItemId::fromString($two);
+
+        $this->assertSame($expected, $one->equals($two));
+        $this->assertSame($expected, $two->equals($one));
+    }
+
+    public function comparisonProvider() : iterable
+    {
+        yield 'same' => ['foo', 'foo', true];
+        yield 'different' => ['bar', 'baz', false];
+    }
 }

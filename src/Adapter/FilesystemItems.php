@@ -123,19 +123,21 @@ final class FilesystemItems implements IteratorAggregate, Items
     {
         if (null !== $cursor) {
             try {
-                $cursor = ItemId::fromString($cursor);
+                $firstId = ItemId::fromString($cursor);
             } catch (InvalidArgumentException $e) {
                 return new ItemListPage([], null);
             }
+        } else {
+            $firstId = null;
         }
 
         $ids = $this->getIds();
 
-        if (null !== $cursor) {
+        if (null !== $firstId) {
             $found = null;
             $i = 0;
             foreach ($ids as $id) {
-                if ($id == $cursor) {
+                if ($id->equals($firstId)) {
                     $found = $i;
                     break;
                 }
