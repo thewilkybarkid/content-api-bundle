@@ -12,6 +12,7 @@ use Libero\ContentApiBundle\Exception\VersionNotFound;
 use Libero\ContentApiBundle\Model\ItemId;
 use Libero\ContentApiBundle\Model\ItemVersion;
 use Libero\ContentApiBundle\Model\ItemVersionNumber;
+use Libero\ContentNegotiationBundle\Exception\NotAcceptableFormat;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -203,5 +204,44 @@ final class ItemsTest extends FunctionalTestCase
         $this->expectException(InvalidVersionNumber::class);
 
         $kernel->handle($request);
+    }
+
+    /**
+     * @test
+     * @dataProvider typePathsProvider
+     */
+    public function it_will_not_negotiate_type_if_not_enabled(string $path) : void
+    {
+        $request = Request::create($path);
+        $request->headers->set('Accept', 'application/json');
+
+        $kernel = static::getKernel('Basic');
+
+        $response = $this->captureContent($kernel, $request, $content);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
+    }
+
+    /**
+     * @test
+     * @dataProvider typePathsProvider
+     */
+    public function it_may_negotiate_type(string $path) : void
+    {
+        $request = Request::create($path);
+        $request->headers->set('Accept', 'application/json');
+
+        $kernel = static::getKernel('ContentNegotiation');
+
+        $this->expectException(NotAcceptableFormat::class);
+
+        $kernel->handle($request);
+    }
+
+    public function typePathsProvider() : iterable
+    {
+        yield 'list' => ['/service-one/items'];
+        yield 'item' => ['/service-one/items/1/versions/1'];
     }
 }

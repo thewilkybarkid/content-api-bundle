@@ -27,9 +27,11 @@ final class Loader extends BaseLoader
             $service->add('ping', "libero.content_api.{$config['name']}.ping");
 
             $service->add('items', "libero.content_api.{$config['name']}.item_list.get")
+                ->setRequirement('_format', 'xml')
                 ->setMethods('GET');
 
             $service->add('items/{id}/versions/{version}', "libero.content_api.{$config['name']}.item.get")
+                ->setRequirement('_format', 'xml')
                 ->setMethods('GET');
 
             $routes->mount($prefix, $service);
