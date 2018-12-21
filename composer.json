@@ -38,7 +38,7 @@
         "phpunit/phpunit": "^7.2",
         "symfony/console": "^3.4 || ^4.0",
         "symfony/filesystem": "^3.4 || ^4.0",
-        "symfony/translation": "^3.4 || ^4.0"
+        "symfony/translation": "^3.4.19 || ^4.1.8"
     },
     "suggest": {
         "doctrine/dbal": "To use the DoctrineItems adapter",

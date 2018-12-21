@@ -18,10 +18,10 @@ jobs:
     include:
 
         - stage: Test
-          name: Symfony 4.0
+          name: Symfony 4.1
           before_install:
               - *Xdebug
-              - composer require --dev --no-update symfony/symfony=4.0.*
+              - composer require --dev --no-update symfony/symfony=4.1.*
           php: 7.2
 
         - stage: Test

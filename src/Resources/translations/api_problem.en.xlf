@@ -4,58 +4,48 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
 
-    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="en" datatype="plaintext" original="file.ext">
 
         <body>
 
-            <trans-unit id="libero.content.item.not_found.title">
-                <source>libero.content.item.not_found.title</source>
-                <target>Item not found</target>
+            <trans-unit id="1" resname="libero.content.item.not_found.title">
+                <source>Item not found</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.not_found.details">
-                <source>libero.content.item.not_found.details</source>
-                <target>An item with the ID "%id%" could not be found.</target>
+            <trans-unit id="2" resname="libero.content.item.not_found.details">
+                <source>An item with the ID "%id%" could not be found.</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.invalid_id.title">
-                <source>libero.content.item.invalid_id.title</source>
-                <target>Invalid ID</target>
+            <trans-unit id="3" resname="libero.content.item.invalid_id.title">
+                <source>Invalid ID</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.invalid_id.details">
-                <source>libero.content.item.invalid_id.details</source>
-                <target>"%id%" is not a valid ID.</target>
+            <trans-unit id="4" resname="libero.content.item.invalid_id.details">
+                <source>"%id%" is not a valid ID.</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.invalid_version.title">
-                <source>libero.content.item.invalid_version.title</source>
-                <target>Invalid version number</target>
+            <trans-unit id="5" resname="libero.content.item.invalid_version.title">
+                <source>Invalid version number</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.invalid_version.details">
-                <source>libero.content.item.invalid_version.details</source>
-                <target>"%version%" is not a valid version number.</target>
+            <trans-unit id="6" resname="libero.content.item.invalid_version.details">
+                <source>"%version%" is not a valid version number.</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.unexpected_version.title">
-                <source>libero.content.item.unexpected_version.title</source>
-                <target>Unexpected version number</target>
+            <trans-unit id="7" resname="libero.content.item.unexpected_version.title">
+                <source>Unexpected version number</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.unexpected_version.details">
-                <source>libero.content.item.unexpected_version.details</source>
-                <target>Expected version %expected% for item "%id%", not %version%.</target>
+            <trans-unit id="8" resname="libero.content.item.unexpected_version.details">
+                <source>Expected version %expected% for item "%id%", not %version%.</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.version_not_found.title">
-                <source>libero.content.item.version_not_found.title</source>
-                <target>Item version not found</target>
+            <trans-unit id="9" resname="libero.content.item.version_not_found.title">
+                <source>Item version not found</source>
             </trans-unit>
 
-            <trans-unit id="libero.content.item.version_not_found.details">
-                <source>libero.content.item.version_not_found.details</source>
-                <target>Item "%id%" does not have a version %version%.</target>
+            <trans-unit id="10" resname="libero.content.item.version_not_found.details">
+                <source>Item "%id%" does not have a version %version%.</source>
             </trans-unit>
 
         </body>
