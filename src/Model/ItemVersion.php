@@ -6,9 +6,13 @@ namespace Libero\ContentApiBundle\Model;
 
 final class ItemVersion
 {
+    /** @var resource */
     private $content;
+    /** @var string */
     private $hash;
+    /** @var string */
     private $id;
+    /** @var int */
     private $version;
 
     /**

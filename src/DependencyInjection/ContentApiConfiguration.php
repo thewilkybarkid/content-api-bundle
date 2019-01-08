@@ -10,6 +10,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class ContentApiConfiguration implements ConfigurationInterface
 {
+    /** @var string */
     private $rootName;
 
     public function __construct(string $rootName)

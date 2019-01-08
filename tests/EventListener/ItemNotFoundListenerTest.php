@@ -43,7 +43,7 @@ final class ItemNotFoundListenerTest extends TestCase
 
         $listener->onCreateApiProblem($event);
 
-        $this->assertXmlStringEqualsXmlString(
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="es" xmlns="urn:ietf:rfc:7807">
                 <status>404</status>
                 <title>es title</title>
@@ -65,7 +65,7 @@ final class ItemNotFoundListenerTest extends TestCase
 
         $listener->onCreateApiProblem($event);
 
-        $this->assertXmlStringEqualsXmlString(
+        self::assertXmlStringEqualsXmlString(
             $expected,
             $event->getDocument()->saveXML()
         );

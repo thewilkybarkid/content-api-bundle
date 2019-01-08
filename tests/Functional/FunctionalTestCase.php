@@ -49,7 +49,7 @@ abstract class FunctionalTestCase extends TestCase
         return self::$kernels[$name];
     }
 
-    final protected function captureContent(KernelInterface $kernel, Request $request, &$content) : Response
+    final protected function captureContent(KernelInterface $kernel, Request $request, ?string &$content) : Response
     {
         return capture_output(
             function () use ($kernel, $request) : Response {

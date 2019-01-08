@@ -25,10 +25,10 @@ final class ItemErrorsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
-        $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertSame('en', $response->headers->get('Content-Language'));
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertSame('en', $response->headers->get('Content-Language'));
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="en" xmlns="urn:ietf:rfc:7807">
                 <status>404</status>
                 <title>Item not found</title>
@@ -62,9 +62,9 @@ final class ItemErrorsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertSame('en', $response->headers->get('Content-Language'));
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertSame('en', $response->headers->get('Content-Language'));
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="en" xmlns="urn:ietf:rfc:7807">
                 <status>404</status>
                 <title>Item version not found</title>
@@ -72,7 +72,7 @@ final class ItemErrorsTest extends FunctionalTestCase
             </problem>',
             $response->getContent()
         );
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
     }
 
     /**
@@ -86,10 +86,10 @@ final class ItemErrorsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
-        $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertSame('en', $response->headers->get('Content-Language'));
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertSame('en', $response->headers->get('Content-Language'));
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="en" xmlns="urn:ietf:rfc:7807">
                 <status>400</status>
                 <title>Invalid ID</title>
@@ -110,10 +110,10 @@ final class ItemErrorsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
-        $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertSame('en', $response->headers->get('Content-Language'));
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertSame('en', $response->headers->get('Content-Language'));
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="en" xmlns="urn:ietf:rfc:7807">
                 <status>400</status>
                 <title>Invalid version number</title>

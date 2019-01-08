@@ -20,7 +20,7 @@ final class PingTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('pong', $response->getContent());
+        self::assertSame('pong', $response->getContent());
     }
 
     public function serviceProvider() : iterable

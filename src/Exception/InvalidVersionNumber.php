@@ -9,6 +9,7 @@ use UnexpectedValueException;
 
 class InvalidVersionNumber extends UnexpectedValueException
 {
+    /** @var string */
     private $version;
 
     public function __construct(string $version, ?Throwable $previous = null, int $code = 0)

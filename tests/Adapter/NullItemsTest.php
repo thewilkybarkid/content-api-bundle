@@ -25,7 +25,7 @@ final class NullItemsTest extends TestCase
     {
         $items = new NullItems();
 
-        $this->assertInstanceOf(Items::class, $items);
+        self::assertInstanceOf(Items::class, $items);
     }
 
     /**
@@ -47,8 +47,8 @@ final class NullItemsTest extends TestCase
 
         $items->add($item);
 
-        $this->assertCount(0, $items);
-        $this->assertSame([], iterator_to_array($items));
+        self::assertCount(0, $items);
+        self::assertSame([], iterator_to_array($items));
     }
 
     /**
@@ -60,8 +60,8 @@ final class NullItemsTest extends TestCase
 
         $items->remove(ItemId::fromString('foo'), null);
 
-        $this->assertCount(0, $items);
-        $this->assertSame([], iterator_to_array($items));
+        self::assertCount(0, $items);
+        self::assertSame([], iterator_to_array($items));
     }
 
     /**
@@ -73,8 +73,8 @@ final class NullItemsTest extends TestCase
 
         $items->remove(ItemId::fromString('foo'), ItemVersionNumber::fromInt(1));
 
-        $this->assertCount(0, $items);
-        $this->assertSame([], iterator_to_array($items));
+        self::assertCount(0, $items);
+        self::assertSame([], iterator_to_array($items));
     }
 
     /**
@@ -96,8 +96,8 @@ final class NullItemsTest extends TestCase
     {
         $items = new NullItems();
 
-        $this->assertEquals(new ItemListPage([], null), $items->list());
-        $this->assertEquals(new ItemListPage([], null), $items->list(20));
-        $this->assertEquals(new ItemListPage([], null), $items->list(10, 'foo'));
+        self::assertEquals(new ItemListPage([], null), $items->list());
+        self::assertEquals(new ItemListPage([], null), $items->list(20));
+        self::assertEquals(new ItemListPage([], null), $items->list(10, 'foo'));
     }
 }

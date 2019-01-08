@@ -23,7 +23,7 @@ final class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    private $rootConfig;
+    /** @var string */
     private $testCase;
 
     public function __construct(string $testCase, string $environment, bool $debug)
@@ -82,6 +82,9 @@ final class Kernel extends BaseKernel
         return serialize([$this->testCase, $this->getEnvironment(), $this->isDebug()]);
     }
 
+    /**
+     * @param string $str
+     */
     public function unserialize($str) : void
     {
         call_user_func_array([$this, '__construct'], unserialize($str));

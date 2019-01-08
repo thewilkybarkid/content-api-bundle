@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Libero\ContentApiBundle\Adapter;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\LockMode;
 use Doctrine\DBAL\ParameterType;
@@ -24,6 +25,7 @@ use function array_column;
 use function array_map;
 use function array_pop;
 use function count;
+use function is_string;
 use function rewind;
 use function sprintf;
 
@@ -31,8 +33,13 @@ final class DoctrineItems implements IteratorAggregate, Items
 {
     private const TRAVERSING_LIMIT = 100;
 
+    /** @var Connection */
     private $connection;
+
+    /** @var string */
     private $tableItems;
+
+    /** @var string */
     private $tableVersions;
 
     public function __construct(Connection $connection, string $tablePrefix)
@@ -160,16 +167,17 @@ final class DoctrineItems implements IteratorAggregate, Items
             ->orderBy('item.sequence')
             ->setMaxResults($limit + 1);
 
-        if ($cursor) {
+        if (is_string($cursor)) {
             $query
                 ->where($query->expr()->gte('item.sequence', ':cursor'))
                 ->setParameter('cursor', (int) $cursor);
         }
 
+        /** @var Statement $results */
         $results = $query->execute();
         $ids = $results->fetchAll(FetchMode::ASSOCIATIVE);
 
-        if (empty($ids)) {
+        if (0 === count($ids)) {
             return new ItemListPage([], null);
         }
 

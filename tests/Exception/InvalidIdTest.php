@@ -17,8 +17,8 @@ final class InvalidIdTest extends TestCase
     {
         $invalidId = new InvalidId('foo bar');
 
-        $this->assertInstanceOf(UnexpectedValueException::class, $invalidId);
-        $this->assertSame("'foo bar' is not a valid ID", $invalidId->getMessage());
+        self::assertInstanceOf(UnexpectedValueException::class, $invalidId);
+        self::assertSame("'foo bar' is not a valid ID", $invalidId->getMessage());
     }
 
     /**
@@ -28,6 +28,6 @@ final class InvalidIdTest extends TestCase
     {
         $invalidId = new InvalidId('foo bar');
 
-        $this->assertSame('foo bar', $invalidId->getId());
+        self::assertSame('foo bar', $invalidId->getId());
     }
 }

@@ -13,6 +13,7 @@ use function is_string;
 
 final class ItemVersionNumber
 {
+    /** @var int */
     private $version;
 
     private function __construct(int $version)

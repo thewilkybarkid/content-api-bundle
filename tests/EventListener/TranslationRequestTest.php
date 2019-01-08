@@ -16,7 +16,7 @@ final class TranslationRequestTest extends TestCase
     {
         $translation = new TranslationRequest('key');
 
-        $this->assertSame('key', $translation->getKey());
+        self::assertSame('key', $translation->getKey());
     }
 
     /**
@@ -27,7 +27,7 @@ final class TranslationRequestTest extends TestCase
         $with = new TranslationRequest('key', $parameters = ['foo' => 'bar']);
         $withOut = new TranslationRequest('key');
 
-        $this->assertSame($parameters, $with->getParameters());
-        $this->assertEmpty($withOut->getParameters());
+        self::assertSame($parameters, $with->getParameters());
+        self::assertEmpty($withOut->getParameters());
     }
 }

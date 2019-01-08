@@ -10,6 +10,7 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
 
 final class Loader extends BaseLoader
 {
+    /** @var array<string,array<string,string>> */
     private $services;
 
     public function __construct(array $services)
@@ -17,6 +18,10 @@ final class Loader extends BaseLoader
         $this->services = $services;
     }
 
+    /**
+     * @param mixed $resource
+     * @param ?string $type
+     */
     public function load($resource, $type = null) : RouteCollection
     {
         $routes = new RouteCollectionBuilder();
@@ -40,6 +45,10 @@ final class Loader extends BaseLoader
         return $routes->build();
     }
 
+    /**
+     * @param mixed $resource
+     * @param ?string $type
+     */
     public function supports($resource, $type = null) : bool
     {
         return 'content_api' === $type;

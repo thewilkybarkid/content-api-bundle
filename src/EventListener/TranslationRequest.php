@@ -6,9 +6,14 @@ namespace Libero\ContentApiBundle\EventListener;
 
 final class TranslationRequest
 {
+    /** @var string */
     private $key;
+    /** @var array<string,mixed> */
     private $parameters;
 
+    /**
+     * @param array<string,mixed> $parameters
+     */
     public function __construct(string $key, array $parameters = [])
     {
         $this->key = $key;
@@ -20,6 +25,9 @@ final class TranslationRequest
         return $this->key;
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function getParameters() : array
     {
         return $this->parameters;

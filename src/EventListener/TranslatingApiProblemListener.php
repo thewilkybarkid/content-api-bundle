@@ -19,7 +19,9 @@ trait TranslatingApiProblemListener
 
     final protected function details(CreateApiProblem $event) : ?string
     {
-        if (!$translation = $this->detailsTranslation($event)) {
+        $translation = $this->detailsTranslation($event);
+
+        if (!$translation instanceof TranslationRequest) {
             return null;
         }
 

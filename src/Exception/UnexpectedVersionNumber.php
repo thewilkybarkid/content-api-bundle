@@ -11,8 +11,13 @@ use Throwable;
 
 class UnexpectedVersionNumber extends OutOfBoundsException
 {
+    /** @var ItemVersionNumber */
     private $expected;
+
+    /** @var ItemId */
     private $id;
+
+    /** @var ItemVersionNumber */
     private $version;
 
     public function __construct(

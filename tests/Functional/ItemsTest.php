@@ -32,10 +32,10 @@ final class ItemsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
-        $this->assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertFalse($response->headers->has('Link'), 'Must not have a Link header');
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertFalse($response->headers->has('Link'), 'Must not have a Link header');
+        self::assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8"?><item-list xmlns="http://libero.pub"/>',
             $response->getContent()
         );
@@ -53,10 +53,10 @@ final class ItemsTest extends FunctionalTestCase
 
         $response = $kernel->handle($request);
 
-        $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
-        $this->assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertFalse($response->headers->has('Link'), 'Must not have a Link header');
-        $this->assertEmpty($response->getContent());
+        self::assertSame('no-cache, private', $response->headers->get('Cache-Control'));
+        self::assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertFalse($response->headers->has('Link'), 'Must not have a Link header');
+        self::assertEmpty($response->getContent());
     }
 
     /**
@@ -102,10 +102,11 @@ final class ItemsTest extends FunctionalTestCase
             )
         );
 
+        $content = '';
         $response = $this->captureContent($kernel, $request, $content);
 
-        $this->assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
-        $this->assertXmlStringEqualsXmlString(
+        self::assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertXmlStringEqualsXmlString(
             '<item>
                 <front>
                     <id>1</id>
@@ -114,8 +115,8 @@ final class ItemsTest extends FunctionalTestCase
             </item>',
             $content
         );
-        $this->assertSame('private, must-revalidate', $response->headers->get('Cache-Control'));
-        $this->assertSame('"some-hash"', $response->headers->get('ETag'));
+        self::assertSame('private, must-revalidate', $response->headers->get('Cache-Control'));
+        self::assertSame('"some-hash"', $response->headers->get('ETag'));
     }
 
     /**
@@ -143,12 +144,12 @@ final class ItemsTest extends FunctionalTestCase
 
         $response = $this->captureContent($kernel, $request, $content);
 
-        $this->assertSame(Response::HTTP_NOT_MODIFIED, $response->getStatusCode());
-        $this->assertFalse($response->headers->has('Content-Length'));
-        $this->assertFalse($response->headers->has('Content-Type'));
-        $this->assertEmpty($content);
-        $this->assertSame('private, must-revalidate', $response->headers->get('Cache-Control'));
-        $this->assertSame('"some-hash"', $response->headers->get('ETag'));
+        self::assertSame(Response::HTTP_NOT_MODIFIED, $response->getStatusCode());
+        self::assertFalse($response->headers->has('Content-Length'));
+        self::assertFalse($response->headers->has('Content-Type'));
+        self::assertEmpty($content);
+        self::assertSame('private, must-revalidate', $response->headers->get('Cache-Control'));
+        self::assertSame('"some-hash"', $response->headers->get('ETag'));
     }
 
     /**
@@ -219,8 +220,8 @@ final class ItemsTest extends FunctionalTestCase
 
         $response = $this->captureContent($kernel, $request, $content);
 
-        $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
+        self::assertSame(200, $response->getStatusCode());
+        self::assertSame('application/xml; charset=utf-8', $response->headers->get('Content-Type'));
     }
 
     /**

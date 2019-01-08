@@ -14,6 +14,7 @@ final class VersionNotFoundListener
 {
     use TranslatingApiProblemListener;
 
+    /** @var TranslatorInterface */
     private $translator;
 
     public function __construct(TranslatorInterface $translator)

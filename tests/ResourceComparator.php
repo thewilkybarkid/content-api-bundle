@@ -20,11 +20,22 @@ use function stream_get_meta_data;
 
 final class ResourceComparator extends Comparator
 {
+    /**
+     * @param mixed $expected
+     * @param mixed $actual
+     */
     public function accepts($expected, $actual) : bool
     {
         return is_resource($expected) && is_resource($actual);
     }
 
+    /**
+     * @param resource $expected
+     * @param resource $actual
+     * @param float $delta
+     * @param bool $canonicalize
+     * @param bool $ignoreCase
+     */
     public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false) : void
     {
         if ($this->asString($actual) !== $this->asString($expected)) {
@@ -37,6 +48,9 @@ final class ResourceComparator extends Comparator
         }
     }
 
+    /**
+     * @param resource $resource
+     */
     private function asString($resource) : string
     {
         if ('stream' !== get_resource_type($resource)) {
@@ -44,8 +58,9 @@ final class ResourceComparator extends Comparator
         }
 
         $metaData = stream_get_meta_data($resource);
+        $match = preg_match('(a\+|c\+|r|w\+|x\+)', $metaData['mode']);
 
-        if (!preg_match('(a\+|c\+|r|w\+|x\+)', $metaData['mode'])) {
+        if (0 === $match) {
             return (string) $resource;
         }
 

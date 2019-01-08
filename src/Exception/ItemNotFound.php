@@ -10,6 +10,7 @@ use Throwable;
 
 class ItemNotFound extends OutOfBoundsException
 {
+    /** @var ItemId */
     private $id;
 
     public function __construct(ItemId $id, ?Throwable $previous = null, int $code = 0)

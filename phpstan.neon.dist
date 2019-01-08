@@ -1,6 +1,7 @@
 parameters:
     ignoreErrors:
         - '~^.*(?=.* Symfony\\Component\\Config\\Definition\\Builder)(?=.*( |:{2})end\(\)).*$~'
+        - '~^Call to (method|static method) PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .+? and .+? will always evaluate to true\.$~'
     level: max
     paths:
         - bin/console
@@ -10,3 +11,4 @@ parameters:
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

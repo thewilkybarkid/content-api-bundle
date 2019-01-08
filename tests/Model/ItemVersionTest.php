@@ -25,7 +25,7 @@ final class ItemVersionTest extends TestCase
             'foo'
         );
 
-        $this->assertEquals($id, $item->getId());
+        self::assertEquals($id, $item->getId());
     }
 
     /**
@@ -40,7 +40,7 @@ final class ItemVersionTest extends TestCase
             'foo'
         );
 
-        $this->assertEquals($version, $item->getVersion());
+        self::assertEquals($version, $item->getVersion());
     }
 
     /**
@@ -55,7 +55,7 @@ final class ItemVersionTest extends TestCase
             'foo'
         );
 
-        $this->assertSame('foo bar', stream_get_contents($item->getContent(), -1, 0));
+        self::assertSame('foo bar', stream_get_contents($item->getContent(), -1, 0));
     }
 
     /**
@@ -70,6 +70,6 @@ final class ItemVersionTest extends TestCase
             $hash = 'foobarbaz'
         );
 
-        $this->assertSame($hash, $item->getHash());
+        self::assertSame($hash, $item->getHash());
     }
 }

@@ -37,7 +37,7 @@ abstract class ItemsTestCase extends TestCase
      */
     final public function it_is_items() : void
     {
-        $this->assertInstanceOf(Items::class, $this->items);
+        static::assertInstanceOf(Items::class, $this->items);
     }
 
     /**
@@ -50,13 +50,13 @@ abstract class ItemsTestCase extends TestCase
             $this->items->add($this->generateItemVersion("item{$i}", 2));
         }
 
-        $this->assertCount(500, $this->items);
+        static::assertCount(500, $this->items);
         $i = 0;
         foreach ($this->items as $item) {
             $i++;
-            $this->assertEquals($this->generateItemVersion("item{$i}", 2), $item);
+            static::assertEquals($this->generateItemVersion("item{$i}", 2), $item);
         }
-        $this->assertSame(500, $i);
+        static::assertSame(500, $i);
     }
 
     /**
@@ -67,18 +67,18 @@ abstract class ItemsTestCase extends TestCase
         $this->items->add($item1 = $this->generateItemVersion('foo', 1));
         $this->items->add($item2 = $this->generateItemVersion('bar', 1));
 
-        $this->assertCount(2, $this->items);
-        $this->assertEquals([$item1, $item2], iterator_to_array($this->items));
+        static::assertCount(2, $this->items);
+        static::assertEquals([$item1, $item2], iterator_to_array($this->items));
 
         $this->items->remove($item1->getId(), null);
 
-        $this->assertCount(1, $this->items);
-        $this->assertEquals([$item2], iterator_to_array($this->items));
+        static::assertCount(1, $this->items);
+        static::assertEquals([$item2], iterator_to_array($this->items));
 
         $this->items->remove($item2->getId(), null);
 
-        $this->assertCount(0, $this->items);
-        $this->assertEquals([], iterator_to_array($this->items));
+        static::assertCount(0, $this->items);
+        static::assertEquals([], iterator_to_array($this->items));
     }
 
     /**
@@ -89,18 +89,18 @@ abstract class ItemsTestCase extends TestCase
         $this->items->add($item1v1 = $this->generateItemVersion('foo', 1));
         $this->items->add($item1v2 = $this->generateItemVersion('foo', 2));
 
-        $this->assertCount(1, $this->items);
-        $this->assertEquals([$item1v2], iterator_to_array($this->items));
+        static::assertCount(1, $this->items);
+        static::assertEquals([$item1v2], iterator_to_array($this->items));
 
         $this->items->remove($item1v2->getId(), $item1v2->getVersion());
 
-        $this->assertCount(1, $this->items);
-        $this->assertEquals([$item1v1], iterator_to_array($this->items));
+        static::assertCount(1, $this->items);
+        static::assertEquals([$item1v1], iterator_to_array($this->items));
 
         $this->items->remove($item1v1->getId(), $item1v1->getVersion());
 
-        $this->assertCount(0, $this->items);
-        $this->assertEquals([], iterator_to_array($this->items));
+        static::assertCount(0, $this->items);
+        static::assertEquals([], iterator_to_array($this->items));
     }
 
     /**
@@ -148,8 +148,8 @@ abstract class ItemsTestCase extends TestCase
         $this->items->remove(ItemId::fromString('foo'), ItemVersionNumber::fromInt(2));
         $this->items->remove(ItemId::fromString('bar'), null);
 
-        $this->assertCount(1, $this->items);
-        $this->assertEquals([$item1v1], iterator_to_array($this->items));
+        static::assertCount(1, $this->items);
+        static::assertEquals([$item1v1], iterator_to_array($this->items));
     }
 
     /**
@@ -161,9 +161,9 @@ abstract class ItemsTestCase extends TestCase
         $this->items->add($item2v1 = $this->generateItemVersion('foo', 2));
         $this->items->add($item1v2 = $this->generateItemVersion('bar', 1));
 
-        $this->assertEquals($item1v1, $this->items->get($item1v1->getId(), $item1v1->getVersion()));
-        $this->assertEquals($item1v2, $this->items->get($item1v2->getId(), $item1v2->getVersion()));
-        $this->assertEquals($item2v1, $this->items->get($item2v1->getId(), $item2v1->getVersion()));
+        static::assertEquals($item1v1, $this->items->get($item1v1->getId(), $item1v1->getVersion()));
+        static::assertEquals($item1v2, $this->items->get($item1v2->getId(), $item1v2->getVersion()));
+        static::assertEquals($item2v1, $this->items->get($item2v1->getId(), $item2v1->getVersion()));
     }
 
     /**
@@ -197,8 +197,8 @@ abstract class ItemsTestCase extends TestCase
         $this->items->add($item2v1 = $this->generateItemVersion('foo', 2));
         $this->items->add($item1v2 = $this->generateItemVersion('bar', 1));
 
-        $this->assertEquals($item1v2, $this->items->get($item1v2->getId()));
-        $this->assertEquals($item2v1, $this->items->get($item2v1->getId()));
+        static::assertEquals($item1v2, $this->items->get($item1v2->getId()));
+        static::assertEquals($item2v1, $this->items->get($item2v1->getId()));
     }
 
     /**
@@ -213,8 +213,8 @@ abstract class ItemsTestCase extends TestCase
 
         $list = $this->items->list();
 
-        $this->assertEquals([$item1v2->getId(), $item2v1->getId(), $item3v1->getId()], iterator_to_array($list));
-        $this->assertNull($list->getCursor());
+        static::assertEquals([$item1v2->getId(), $item2v1->getId(), $item3v1->getId()], iterator_to_array($list));
+        static::assertNull($list->getCursor());
     }
 
     /**
@@ -229,25 +229,25 @@ abstract class ItemsTestCase extends TestCase
 
         $page1 = $this->items->list(1);
 
-        $this->assertCount(1, $page1);
-        $this->assertNotNull($page1->getCursor());
+        static::assertCount(1, $page1);
+        static::assertNotNull($page1->getCursor());
 
         $page2 = $this->items->list(1, $page1->getCursor());
 
-        $this->assertCount(1, $page2);
-        $this->assertNotNull($page2->getCursor());
+        static::assertCount(1, $page2);
+        static::assertNotNull($page2->getCursor());
 
         $page3 = $this->items->list(1, $page2->getCursor());
 
-        $this->assertCount(1, $page3);
-        $this->assertNull($page3->getCursor());
+        static::assertCount(1, $page3);
+        static::assertNull($page3->getCursor());
 
         $results = new AppendIterator();
         $results->append($page1);
         $results->append($page2);
         $results->append($page3);
 
-        $this->assertEquals(
+        static::assertEquals(
             [$item1v2->getId(), $item2v1->getId(), $item3v1->getId()],
             iterator_to_array($results, false)
         );
@@ -258,8 +258,8 @@ abstract class ItemsTestCase extends TestCase
      */
     final public function it_can_return_an_empty_list() : void
     {
-        $this->assertEquals(new ItemListPage([], null), $this->items->list());
-        $this->assertEquals(new ItemListPage([], null), $this->items->list(20));
+        static::assertEquals(new ItemListPage([], null), $this->items->list());
+        static::assertEquals(new ItemListPage([], null), $this->items->list(20));
     }
 
     final protected function generateItemVersion(

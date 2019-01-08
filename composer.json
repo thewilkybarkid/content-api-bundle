@@ -35,6 +35,7 @@
         "php-vfs/php-vfs": "^1.4",
         "phpstan/phpstan": "^0.10",
         "phpstan/phpstan-phpunit": "^0.10",
+        "phpstan/phpstan-strict-rules": "^0.10",
         "phpunit/phpunit": "^7.2",
         "symfony/console": "^3.4 || ^4.0",
         "symfony/filesystem": "^3.4 || ^4.0",

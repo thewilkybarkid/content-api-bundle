@@ -10,7 +10,10 @@ use function ob_get_clean;
 use function ob_start;
 use function rewind;
 
-function capture_output(callable $callback, &$output)
+/**
+ * @return mixed
+ */
+function capture_output(callable $callback, ?string &$output)
 {
     ob_start();
 

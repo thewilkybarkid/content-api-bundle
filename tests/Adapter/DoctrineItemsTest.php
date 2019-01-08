@@ -42,7 +42,7 @@ final class DoctrineItemsTest extends ItemsTestCase
     public function cleanTables() : void
     {
         foreach (self::$doctrineItems->getSchema()->getTables() as $table) {
-            self::$connection->exec(self::$connection->getDatabasePlatform()->getTruncateTableSql($table->getName()));
+            self::$connection->exec(self::$connection->getDatabasePlatform()->getTruncateTableSQL($table->getName()));
         }
     }
 

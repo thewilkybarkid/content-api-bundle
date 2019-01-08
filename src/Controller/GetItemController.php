@@ -19,6 +19,7 @@ final class GetItemController
 {
     private const CHUNK = 1024;
 
+    /** @var Items */
     private $items;
 
     public function __construct(Items $items)

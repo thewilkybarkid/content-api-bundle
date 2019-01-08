@@ -9,6 +9,7 @@ use Libero\ContentApiBundle\Model\Items;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use function http_build_query;
+use function is_string;
 use const PHP_QUERY_RFC3986;
 
 final class GetItemListController
@@ -17,7 +18,10 @@ final class GetItemListController
     private const PER_PAGE = 'per-page';
     private const DEFAULT_PER_PAGE = 20;
 
+    /** @var Items */
     private $items;
+
+    /** @var string */
     private $servicePrefix;
 
     public function __construct(Items $items, string $servicePrefix)
@@ -48,7 +52,7 @@ final class GetItemListController
             ['Content-Type' => 'application/xml; charset=utf-8']
         );
 
-        if ($ids->getCursor()) {
+        if (is_string($ids->getCursor())) {
             $query = clone $request->query;
             $query->set(self::CURSOR, $ids->getCursor());
             if (self::DEFAULT_PER_PAGE === $query->getInt(self::PER_PAGE, self::DEFAULT_PER_PAGE)) {

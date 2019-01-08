@@ -30,11 +30,15 @@ use function iterator_count;
 use function iterator_to_array;
 use function md5_file;
 use function rsort;
+use function stream_get_contents;
 use function substr;
 
 final class FilesystemItems implements IteratorAggregate, Items
 {
+    /** @var Filesystem */
     private $filesystem;
+
+    /** @var string */
     private $path;
 
     public function __construct(string $path, Filesystem $filesystem)
@@ -54,13 +58,19 @@ final class FilesystemItems implements IteratorAggregate, Items
             $current = null;
         }
 
-        $next = $current ? $current->getVersion()->next() : ItemVersionNumber::fromInt(1);
+        $next = $current instanceof ItemVersion ? $current->getVersion()->next() : ItemVersionNumber::fromInt(1);
 
         if ($version > $next) {
             throw new UnexpectedVersionNumber($id, $version, $next);
         }
 
-        $this->filesystem->dumpFile("{$this->path}/{$id}/{$version->toInt()}.xml", $item->getContent());
+        $contents = stream_get_contents($item->getContent());
+
+        if (false === $contents) {
+            throw new RuntimeException('Failed to get contents');
+        }
+
+        $this->filesystem->dumpFile("{$this->path}/{$id}/{$version->toInt()}.xml", $contents);
     }
 
     public function remove(ItemId $id, ?ItemVersionNumber $version) : void
@@ -104,7 +114,9 @@ final class FilesystemItems implements IteratorAggregate, Items
             $version = $this->getVersions($id)->current();
         }
 
-        if (!$content = @fopen($file = "{$this->path}/{$id}/{$version->toInt()}.xml", 'rb')) {
+        $content = @fopen($file = "{$this->path}/{$id}/{$version->toInt()}.xml", 'rb');
+
+        if (false === $content) {
             if (!file_exists($file)) {
                 throw new VersionNotFound($id, $version);
             } else {
@@ -112,7 +124,9 @@ final class FilesystemItems implements IteratorAggregate, Items
             }
         }
 
-        if (!$hash = md5_file($file)) {
+        $hash = md5_file($file);
+
+        if (false === $hash) {
             throw new RuntimeException("Failed to hash {$file}");
         }
 

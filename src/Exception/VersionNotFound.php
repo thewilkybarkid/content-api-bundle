@@ -11,7 +11,10 @@ use Throwable;
 
 class VersionNotFound extends OutOfBoundsException
 {
+    /** @var ItemId */
     private $id;
+
+    /** @var ItemVersionNumber */
     private $version;
 
     public function __construct(ItemId $id, ItemVersionNumber $version, ?Throwable $previous = null, int $code = 0)

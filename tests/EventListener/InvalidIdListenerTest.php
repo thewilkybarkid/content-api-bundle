@@ -42,7 +42,7 @@ final class InvalidIdListenerTest extends TestCase
 
         $listener->onCreateApiProblem($event);
 
-        $this->assertXmlStringEqualsXmlString(
+        self::assertXmlStringEqualsXmlString(
             '<problem xml:lang="es" xmlns="urn:ietf:rfc:7807">
                 <status>400</status>
                 <title>es title</title>
@@ -64,7 +64,7 @@ final class InvalidIdListenerTest extends TestCase
 
         $listener->onCreateApiProblem($event);
 
-        $this->assertXmlStringEqualsXmlString(
+        self::assertXmlStringEqualsXmlString(
             $expected,
             $event->getDocument()->saveXML()
         );

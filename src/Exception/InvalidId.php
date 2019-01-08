@@ -9,6 +9,7 @@ use UnexpectedValueException;
 
 class InvalidId extends UnexpectedValueException
 {
+    /** @var string */
     private $id;
 
     public function __construct(string $id, ?Throwable $previous = null, int $code = 0)

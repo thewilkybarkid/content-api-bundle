@@ -18,7 +18,7 @@ final class ItemIdTest extends TestCase
     {
         $id = ItemId::fromString($value);
 
-        $this->assertSame($value, (string) $id);
+        self::assertSame($value, (string) $id);
     }
 
     public function validProvider() : iterable
@@ -60,8 +60,8 @@ final class ItemIdTest extends TestCase
         $one = ItemId::fromString($one);
         $two = ItemId::fromString($two);
 
-        $this->assertSame($expected, $one->equals($two));
-        $this->assertSame($expected, $two->equals($one));
+        self::assertSame($expected, $one->equals($two));
+        self::assertSame($expected, $two->equals($one));
     }
 
     public function comparisonProvider() : iterable

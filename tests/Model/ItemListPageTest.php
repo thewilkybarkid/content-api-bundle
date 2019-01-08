@@ -24,7 +24,7 @@ final class ItemListPageTest extends TestCase
     {
         $page = new ItemListPage([], null);
 
-        $this->assertInstanceOf(Traversable::class, $page);
+        self::assertInstanceOf(Traversable::class, $page);
     }
 
     /**
@@ -34,7 +34,7 @@ final class ItemListPageTest extends TestCase
     {
         $page = new ItemListPage([], null);
 
-        $this->assertInstanceOf(Countable::class, $page);
+        self::assertInstanceOf(Countable::class, $page);
     }
 
     /**
@@ -48,8 +48,8 @@ final class ItemListPageTest extends TestCase
     {
         $page = new ItemListPage($iterable, null);
 
-        $this->assertEquals($expected, iterator_to_array($page));
-        $this->assertCount(count($expected), $page);
+        self::assertEquals($expected, iterator_to_array($page));
+        self::assertCount(count($expected), $page);
     }
 
     /**
@@ -68,7 +68,7 @@ final class ItemListPageTest extends TestCase
             $actual[$key] = $value;
         }
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function iterableProvider() : iterable
@@ -106,8 +106,8 @@ final class ItemListPageTest extends TestCase
     {
         $page = new ItemListPage([], null);
 
-        $this->assertCount(0, $page);
-        $this->assertSame([], iterator_to_array($page));
+        self::assertCount(0, $page);
+        self::assertSame([], iterator_to_array($page));
     }
 
     /**
@@ -118,7 +118,7 @@ final class ItemListPageTest extends TestCase
         $with = new ItemListPage([], $cursor = 'foo');
         $withOut = new ItemListPage([], null);
 
-        $this->assertSame($cursor, $with->getCursor());
-        $this->assertNull($withOut->getCursor());
+        self::assertSame($cursor, $with->getCursor());
+        self::assertNull($withOut->getCursor());
     }
 }

@@ -14,8 +14,11 @@ use function iterator_count;
 
 final class ItemListPage implements Countable, Iterator
 {
+    /** @var ?string */
     private $cursor;
+    /** @var Iterator<ItemId> */
     private $items;
+    /** @var int */
     private $pointer;
 
     /**

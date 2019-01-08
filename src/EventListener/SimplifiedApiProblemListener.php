@@ -7,6 +7,7 @@ namespace Libero\ContentApiBundle\EventListener;
 use FluentDOM\DOM\Element;
 use Libero\ApiProblemBundle\Event\CreateApiProblem;
 use Throwable;
+use function is_string;
 
 trait SimplifiedApiProblemListener
 {
@@ -22,7 +23,10 @@ trait SimplifiedApiProblemListener
 
         $problem->appendElement('status', (string) $this->status($event));
         $problem->appendElement('title', $this->title($event));
-        if ($details = $this->details($event)) {
+
+        $details = $this->details($event);
+
+        if (is_string($details)) {
             $problem->appendElement('details', $details);
         }
     }

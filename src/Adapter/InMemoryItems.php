@@ -96,15 +96,13 @@ final class InMemoryItems implements IteratorAggregate, Items
         $ids = array_keys($this->items);
 
         if (null !== $cursor) {
-            /** @var int|false $offset */
-            $offset = array_search($cursor, $ids);
+            $offset = array_search($cursor, $ids, true);
 
             if (false === $offset) {
                 return new ItemListPage([], null);
             }
         }
 
-        /** @var string[] $slice */
         $slice = array_slice($ids, $offset ?? 0, $limit + 1);
 
         if (count($slice) > $limit) {
