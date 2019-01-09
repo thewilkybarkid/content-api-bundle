@@ -14,11 +14,11 @@ final class PingTest extends FunctionalTestCase
      */
     public function each_service_pings(string $prefix) : void
     {
-        $kernel = static::getKernel('Basic');
+        static::bootKernel(['test_case' => 'Basic']);
 
         $request = Request::create("/{$prefix}/ping");
 
-        $response = $kernel->handle($request);
+        $response = self::$kernel->handle($request);
 
         $this->assertSame('pong', $response->getContent());
     }
