@@ -17,6 +17,6 @@ final class ContentApiBundleTest extends TestCase
     {
         $bundle = new ContentApiBundle();
 
-        self::assertInstanceOf(BundleInterface::class, $bundle);
+        $this->assertInstanceOf(BundleInterface::class, $bundle);
     }
 }

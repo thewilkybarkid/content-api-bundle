@@ -19,8 +19,8 @@ final class VersionNotFoundTest extends TestCase
     {
         $versionNotFound = new VersionNotFound(ItemId::fromString('foo'), ItemVersionNumber::fromInt(1));
 
-        self::assertInstanceOf(OutOfBoundsException::class, $versionNotFound);
-        self::assertSame("Item 'foo' does not have a version 1", $versionNotFound->getMessage());
+        $this->assertInstanceOf(OutOfBoundsException::class, $versionNotFound);
+        $this->assertSame("Item 'foo' does not have a version 1", $versionNotFound->getMessage());
     }
 
     /**
@@ -30,7 +30,7 @@ final class VersionNotFoundTest extends TestCase
     {
         $versionNotFound = new VersionNotFound($id = ItemId::fromString('foo'), ItemVersionNumber::fromInt(1));
 
-        self::assertEquals($id, $versionNotFound->getId());
+        $this->assertEquals($id, $versionNotFound->getId());
     }
 
     /**
@@ -40,6 +40,6 @@ final class VersionNotFoundTest extends TestCase
     {
         $versionNotFound = new VersionNotFound(ItemId::fromString('foo'), $version = ItemVersionNumber::fromInt(1));
 
-        self::assertEquals($version, $versionNotFound->getVersion());
+        $this->assertEquals($version, $versionNotFound->getVersion());
     }
 }

@@ -17,8 +17,8 @@ final class InvalidVersionNumberTest extends TestCase
     {
         $invalidVersionNumber = new InvalidVersionNumber('foo');
 
-        self::assertInstanceOf(UnexpectedValueException::class, $invalidVersionNumber);
-        self::assertSame("'foo' is not a valid version number", $invalidVersionNumber->getMessage());
+        $this->assertInstanceOf(UnexpectedValueException::class, $invalidVersionNumber);
+        $this->assertSame("'foo' is not a valid version number", $invalidVersionNumber->getMessage());
     }
 
     /**
@@ -28,6 +28,6 @@ final class InvalidVersionNumberTest extends TestCase
     {
         $invalidVersionNumber = new InvalidVersionNumber('foo');
 
-        self::assertSame('foo', $invalidVersionNumber->getVersion());
+        $this->assertSame('foo', $invalidVersionNumber->getVersion());
     }
 }

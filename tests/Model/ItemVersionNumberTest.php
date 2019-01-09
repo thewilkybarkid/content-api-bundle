@@ -21,7 +21,7 @@ final class ItemVersionNumberTest extends TestCase
     {
         $versionNumber = ItemVersionNumber::fromInt($value);
 
-        self::assertSame($value, $versionNumber->toInt());
+        $this->assertSame($value, $versionNumber->toInt());
     }
 
     public function validIntegerProvider() : iterable
@@ -39,7 +39,7 @@ final class ItemVersionNumberTest extends TestCase
     {
         $versionNumber = ItemVersionNumber::fromString($value);
 
-        self::assertSame($expected, $versionNumber->toInt());
+        $this->assertSame($expected, $versionNumber->toInt());
     }
 
     public function validStringProvider() : iterable
@@ -59,7 +59,7 @@ final class ItemVersionNumberTest extends TestCase
     {
         $versionNumber = ItemVersionNumber::create($value);
 
-        self::assertSame($expected, $versionNumber->toInt());
+        $this->assertSame($expected, $versionNumber->toInt());
     }
 
     public function validProvider() : iterable
@@ -161,8 +161,8 @@ final class ItemVersionNumberTest extends TestCase
         $versionNumber2 = ItemVersionNumber::fromInt(2);
         $versionNumber3 = ItemVersionNumber::fromInt(3);
 
-        self::assertEquals($versionNumber2, $versionNumber1->next());
-        self::assertEquals($versionNumber3, $versionNumber2->next());
+        $this->assertEquals($versionNumber2, $versionNumber1->next());
+        $this->assertEquals($versionNumber3, $versionNumber2->next());
     }
 
     /**
@@ -174,8 +174,8 @@ final class ItemVersionNumberTest extends TestCase
         $versionNumber2 = ItemVersionNumber::fromInt(2);
         $versionNumber3 = ItemVersionNumber::fromInt(3);
 
-        self::assertEquals($versionNumber2, $versionNumber3->previous());
-        self::assertEquals($versionNumber1, $versionNumber2->previous());
+        $this->assertEquals($versionNumber2, $versionNumber3->previous());
+        $this->assertEquals($versionNumber1, $versionNumber2->previous());
     }
 
     /**

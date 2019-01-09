@@ -1,7 +1,8 @@
 parameters:
     ignoreErrors:
         - '~^.*(?=.* Symfony\\Component\\Config\\Definition\\Builder)(?=.*( |:{2})end\(\)).*$~'
-        - '~^Call to (method|static method) PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .+? and .+? will always evaluate to true\.$~'
+        - '~^Call to method PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .+? and .+? will always evaluate to true\.$~'
+        - '~^Dynamic call to static method PHPUnit\\Framework\\Assert::assert[A-z]+\(\)\.$~'
     level: max
     paths:
         - bin/console

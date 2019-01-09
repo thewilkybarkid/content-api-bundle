@@ -18,8 +18,8 @@ final class ItemNotFoundTest extends TestCase
     {
         $itemNotFound = new ItemNotFound(ItemId::fromString('foo'));
 
-        self::assertInstanceOf(OutOfBoundsException::class, $itemNotFound);
-        self::assertSame("An item with the ID 'foo' could not be found", $itemNotFound->getMessage());
+        $this->assertInstanceOf(OutOfBoundsException::class, $itemNotFound);
+        $this->assertSame("An item with the ID 'foo' could not be found", $itemNotFound->getMessage());
     }
 
     /**
@@ -29,6 +29,6 @@ final class ItemNotFoundTest extends TestCase
     {
         $itemNotFound = new ItemNotFound($id = ItemId::fromString('foo'));
 
-        self::assertEquals($id, $itemNotFound->getId());
+        $this->assertEquals($id, $itemNotFound->getId());
     }
 }
