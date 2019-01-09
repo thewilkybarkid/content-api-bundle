@@ -154,8 +154,11 @@ final class DoctrineItems implements IteratorAggregate, Items
 
     public function list(int $limit = 10, ?string $cursor = null) : ItemListPage
     {
-        if (null !== $cursor && ((string) (int) $cursor) !== $cursor) {
-            return new ItemListPage([], null);
+        if (is_string($cursor)) {
+            $intCursor = (int) $cursor;
+            if ((string) $intCursor !== $cursor) {
+                return new ItemListPage([], null);
+            }
         }
 
         $query = $this->connection->createQueryBuilder();
@@ -167,17 +170,17 @@ final class DoctrineItems implements IteratorAggregate, Items
             ->orderBy('item.sequence')
             ->setMaxResults($limit + 1);
 
-        if (is_string($cursor)) {
+        if (isset($intCursor)) {
             $query
                 ->where($query->expr()->gte('item.sequence', ':cursor'))
-                ->setParameter('cursor', (int) $cursor);
+                ->setParameter('cursor', $intCursor);
         }
 
         /** @var Statement $results */
         $results = $query->execute();
         $ids = $results->fetchAll(FetchMode::ASSOCIATIVE);
 
-        if (0 === count($ids)) {
+        if ([] === $ids) {
             return new ItemListPage([], null);
         }
 
