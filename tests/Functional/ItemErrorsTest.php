@@ -8,7 +8,6 @@ use Libero\ContentApiBundle\Adapter\InMemoryItems;
 use Libero\ContentApiBundle\Model\ItemId;
 use Libero\ContentApiBundle\Model\ItemVersion;
 use Libero\ContentApiBundle\Model\ItemVersionNumber;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use function tests\Libero\ContentApiBundle\stream_from_string;
 
@@ -19,11 +18,11 @@ final class ItemErrorsTest extends FunctionalTestCase
      */
     public function it_may_not_find_an_item() : void
     {
+        static::bootKernel(['test_case' => 'ApiProblem']);
+
         $request = Request::create('/service/items/1/versions/1');
 
-        $kernel = static::getKernel('ApiProblem');
-
-        $response = $kernel->handle($request);
+        $response = self::$kernel->handle($request);
 
         $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
         $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
@@ -43,14 +42,10 @@ final class ItemErrorsTest extends FunctionalTestCase
      */
     public function it_may_not_find_an_item_version() : void
     {
-        $request = Request::create('/service/items/1/versions/2');
-
-        $kernel = static::getKernel('ApiProblem');
-        /** @var ContainerInterface $container */
-        $container = $kernel->getContainer();
+        static::bootKernel(['test_case' => 'ApiProblem']);
 
         /** @var InMemoryItems $items */
-        $items = $container->get(InMemoryItems::class);
+        $items = self::$container->get(InMemoryItems::class);
         $items->add(
             new ItemVersion(
                 ItemId::fromString('1'),
@@ -60,7 +55,9 @@ final class ItemErrorsTest extends FunctionalTestCase
             )
         );
 
-        $response = $kernel->handle($request);
+        $request = Request::create('/service/items/1/versions/2');
+
+        $response = self::$kernel->handle($request);
 
         $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
         $this->assertSame('en', $response->headers->get('Content-Language'));
@@ -80,11 +77,11 @@ final class ItemErrorsTest extends FunctionalTestCase
      */
     public function it_recognises_invalid_ids() : void
     {
+        static::bootKernel(['test_case' => 'ApiProblem']);
+
         $request = Request::create('/service/items/foo bar/versions/1');
 
-        $kernel = static::getKernel('ApiProblem');
-
-        $response = $kernel->handle($request);
+        $response = self::$kernel->handle($request);
 
         $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
         $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
@@ -104,11 +101,11 @@ final class ItemErrorsTest extends FunctionalTestCase
      */
     public function it_recognises_invalid_versions() : void
     {
+        static::bootKernel(['test_case' => 'ApiProblem']);
+
         $request = Request::create('/service/items/foo/versions/foo');
 
-        $kernel = static::getKernel('ApiProblem');
-
-        $response = $kernel->handle($request);
+        $response = self::$kernel->handle($request);
 
         $this->assertSame('no-cache, private', $response->headers->get('Cache-Control'));
         $this->assertSame('application/problem+xml; charset=utf-8', $response->headers->get('Content-Type'));
