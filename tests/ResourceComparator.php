@@ -14,7 +14,7 @@ use function hash_init;
 use function hash_update_stream;
 use function is_int;
 use function is_resource;
-use function preg_match;
+use function Libero\ContentApiBundle\matches;
 use function rewind;
 use function stream_get_meta_data;
 
@@ -58,9 +58,7 @@ final class ResourceComparator extends Comparator
         }
 
         $metaData = stream_get_meta_data($resource);
-        $match = preg_match('(a\+|c\+|r|w\+|x\+)', $metaData['mode']);
-
-        if (0 === $match) {
+        if (!matches('(a\+|c\+|r|w\+|x\+)', $metaData['mode'])) {
             return (string) $resource;
         }
 

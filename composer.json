@@ -6,7 +6,10 @@
     "autoload": {
         "psr-4": {
             "Libero\\ContentApiBundle\\": "src/"
-        }
+        },
+        "files": [
+            "src/functions.php"
+        ]
     },
     "autoload-dev": {
         "files": [

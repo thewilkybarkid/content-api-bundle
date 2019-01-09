@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Libero\ContentApiBundle\Model;
 
 use Libero\ContentApiBundle\Exception\InvalidId;
-use function preg_match;
+use function Libero\ContentApiBundle\matches;
 
 final class ItemId
 {
@@ -24,9 +24,7 @@ final class ItemId
 
     public static function fromString(string $id) : ItemId
     {
-        $match = preg_match('/^([A-Za-z0-9-._~!$&\'()*+,;=:@]|%[A-F0-9]{2})+$/', $id);
-
-        if (0 === $match) {
+        if (!matches('/^([A-Za-z0-9-._~!$&\'()*+,;=:@]|%[A-F0-9]{2})+$/', $id)) {
             throw new InvalidId($id);
         }
 
