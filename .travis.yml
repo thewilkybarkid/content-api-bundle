@@ -17,17 +17,22 @@ script:
 jobs:
     include:
 
-        - stage: Test
-          name: Symfony version
-          php: 7.2
-          env:
-              - SYMFONY_REQUIRE=~4.2.0
-              - SYMFONY_REQUIRE=~4.1.0
-              - SYMFONY_REQUIRE=~4.0.0
-              - SYMFONY_REQUIRE=~3.4.0
+        - &Symfony
+          stage: Test
+          name: Symfony 4.1
+          env: SYMFONY_REQUIRE=~4.1.0
           before_install:
               - *Xdebug
               - travis_retry composer global require --no-scripts symfony/flex
+          php: 7.2
+
+        - << : *Symfony
+          name: Symfony 4.0
+          env: SYMFONY_REQUIRE=~4.0.0
+
+        - << : *Symfony
+          name: Symfony 3.4
+          env: SYMFONY_REQUIRE=~3.4.0
 
         - stage: Test
           name: Lowest dependency versions
