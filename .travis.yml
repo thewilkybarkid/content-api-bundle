@@ -18,18 +18,16 @@ jobs:
     include:
 
         - stage: Test
-          name: Symfony 4.1
+          name: Symfony version
+          php: 7.2
+          env:
+              - SYMFONY_REQUIRE=~4.2.0
+              - SYMFONY_REQUIRE=~4.1.0
+              - SYMFONY_REQUIRE=~4.0.0
+              - SYMFONY_REQUIRE=~3.4.0
           before_install:
               - *Xdebug
-              - composer require --dev --no-update symfony/symfony=4.1.*
-          php: 7.2
-
-        - stage: Test
-          name: Symfony 3.4
-          before_install:
-              - *Xdebug
-              - composer require --dev --no-update symfony/symfony=3.4.*
-          php: 7.2
+              - travis_retry composer global require --no-scripts symfony/flex
 
         - stage: Test
           name: Lowest dependency versions
