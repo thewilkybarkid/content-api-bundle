@@ -24,6 +24,9 @@ jobs:
           before_install:
               - *Xdebug
               - travis_retry composer global require --no-scripts symfony/flex
+          install:
+              - travis_retry composer install --no-plugins --no-suggest --prefer-dist
+              - travis_retry composer update --classmap-authoritative --no-suggest --prefer-dist
           php: 7.2
 
         - << : *Symfony
